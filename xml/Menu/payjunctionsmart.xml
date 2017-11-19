@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/payjunctionsmart/webhook</path>
+    <page_callback>CRM_PayjunctionSmart_Page_Webhook</page_callback>
+    <title>Webhook</title>
+    <access_arguments>make online contributions</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/smart-terminal/processing</path>
+    <page_callback>CRM_PayjunctionSmart_Page_Processing</page_callback>
+    <title>Webhook</title>
+    <access_arguments>make online contributions</access_arguments>
+  </item>
+</menu>

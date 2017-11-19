@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<extension key="com.wannapixel.payjunctionsmart" type="module">
+  <file>payjunctionsmart</file>
+  <name>Payjunctionsmart</name>
+  <description>Payjunction Payment Processor</description>
+  <urls>
+    <url desc="Main Extension Page"></url>
+  </urls>
+  <license>AGPL</license>
+  <maintainer>
+    <author>Aniessh Sethh</author>
+    <email>aniesshsethh@gmail.com</email>
+  </maintainer>
+  <releaseDate>2017-10-25</releaseDate>
+  <version>4.7.3</version>
+  <compatibility>
+    <ver>4.7</ver>
+  </compatibility>
+  <comments></comments>
+  <civix>
+    <namespace>CRM/PayjunctionSmart</namespace>
+  </civix>
+</extension>
