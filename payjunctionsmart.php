@@ -6,10 +6,10 @@ require_once 'payjunctionsmart.civix.php';
  * Implementation of hook_civicrm_config().
  */
 function payjunctionsmart_civicrm_config(&$config) {
-  _payjunctionsmart_civix_civicrm_config($config);
-  $extRoot = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR;
-  $include_path = $extRoot . PATH_SEPARATOR . get_include_path( );
-  set_include_path( $include_path );
+    _payjunctionsmart_civix_civicrm_config($config);
+    $extRoot = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR;
+    $include_path = $extRoot . PATH_SEPARATOR . get_include_path( );
+    set_include_path( $include_path );
 }
 
 /**
@@ -18,16 +18,16 @@ function payjunctionsmart_civicrm_config(&$config) {
  * @param $files array(string)
  */
 function payjunctionsmart_civicrm_xmlMenu(&$files) {
-  _payjunctionsmart_civix_civicrm_xmlMenu($files);
+    _payjunctionsmart_civix_civicrm_xmlMenu($files);
 }
 
 /**
  * Implementation of hook_civicrm_install().
  */
 function payjunctionsmart_civicrm_install() {
-  // Create required tables for Stripe.
-  require_once "CRM/Core/DAO.php";
-  CRM_Core_DAO::executeQuery("
+    // Create required tables for Stripe.
+    require_once "CRM/Core/DAO.php";
+    CRM_Core_DAO::executeQuery("
   CREATE TABLE IF NOT EXISTS `smart_junction_payment_tracking` (
     `contact_id` int(10) COLLATE utf8_unicode_ci DEFAULT NULL,
     `request_id` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -83,7 +83,7 @@ function payjunctionsmart_civicrm_managed(&$entities) {
       'title' => 'PayjunctionSmart',
       'description' => 'PayjunctionSmart Payment Processor',
       'class_name' => 'Payment_PayjunctionSmart',
-      'billing_mode' => 'notify',
+      'billing_mode' => 'form',
       'user_name_label' => 'API Login',
       'password_label' => 'Password',
       'signature_label' => 'Transaction Key',
@@ -118,39 +118,16 @@ function payjunctionsmart_civicrm_managed(&$entities) {
 
 
  }
- function payjunctionsmart_civicrm_buildForm($formName, &$form){
-   if($formName == 'CRM_Contribute_Form_Contribution_Main'){
+function payjunctionsmart_civicrm_buildForm($formName, &$form){
 
-   }
- }
-
-/*   $result = civicrm_api3('PaymentProcessor', 'getvalue', array(
-     'return' => "password",
-     'id' => get_payjunctionsmart_ppid(),
-   ));*/
-   /*echo "<pre>";
-   print_r($form);
-   echo "</pre>";
-   $contact_id  = $form->_contactID;
-   $price = $fields['price_13'];
-   $url = $fields['entryURL'];
-   $curl = curl_init();
-   $fields = array(
-   			'amountBase' => ($amount/100),
-   			'terminalId' => $terminal,
-   			'invoiceNumber' => $order_id
-   		       );
-   	curl_setopt_array($curl, array(
-   				CURLOPT_RETURNTRANSFER => 1,
-   				CURLOPT_URL => $api_url.'/smartterminals/'.$smart_terminal.'/request-payment',
-   				CURLOPT_USERPWD => $api_login.':'.$api_password,
-   				CURLOPT_HTTPHEADER => array(
-   					'X-PJ-Application-Key: '.$application_key,
-   					'Content-Type: application/x-www-form-urlencoded'
-   					),
-   				CURLOPT_POSTFIELDS => http_build_query($fields),
-   				CURLOPT_POST => TRUE
-   				));
-   	$resp = curl_exec($curl);
-   	$response_data = json_decode($resp,TRUE);
-   	curl_close($curl);*/
+  if((($formName == 'CRM_Contribute_Form_Contribution') && ($form->isBackOffice == 1)) ||
+     (($formName == 'CRM_Financial_Form_Payment') && ($form->_paymentProcessor['name'] == 'payjunction'))){
+       $elements = & $form->getElement('credit_card_type');
+       $options = & $elements->_options;
+       $options[1]['attr']['selected'] = '';
+       $defaults['cvv2'] = '123';
+       $defaults['credit_card_exp_date'] = '2027-12';
+       $defaults['credit_card_number'] = '4111111111111111';
+       $form->setDefaults($defaults);
+  }
+}

@@ -188,8 +188,7 @@ class CRM_Core_Payment_PayjunctionSmart extends CRM_Core_Payment {
     ));
     return $version;
   }
-  public function doTransferCheckout($params, $component){
-
+  public function doDirectPayment(&$params) {
       $amount = $params['amount'];
       $api_login = $params['payjunctionsmart_api_login'];
       $api_password = $params['payjunctionsmart_api_password'];
@@ -227,8 +226,15 @@ class CRM_Core_Payment_PayjunctionSmart extends CRM_Core_Payment {
 
       CRM_Core_DAO::executeQuery($query);
   }
-  public function doDirectPayment(&$params) {
-
-  }
-
 }
+
+
+
+
+
+
+
+
+
+
+
