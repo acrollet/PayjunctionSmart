@@ -200,7 +200,7 @@ class CRM_Core_Payment_PayjunctionSmart extends CRM_Core_Payment {
       $amount = $params['amount'];
     	$curl = curl_init();
     	$fields = array(
-    			'amountBase' => ($amount/100),
+    			'amountBase' => $amount,
     			'terminalId' => '11649',
     			'invoiceNumber' => $contribution_id
     		       );

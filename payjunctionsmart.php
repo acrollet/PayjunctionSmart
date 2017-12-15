@@ -122,12 +122,14 @@ function payjunctionsmart_civicrm_buildForm($formName, &$form){
 
   if((($formName == 'CRM_Contribute_Form_Contribution') && ($form->isBackOffice == 1)) ||
      (($formName == 'CRM_Financial_Form_Payment') && ($form->_paymentProcessor['name'] == 'payjunction'))){
-       $elements = & $form->getElement('credit_card_type');
-       $options = & $elements->_options;
-       $options[1]['attr']['selected'] = '';
-       $defaults['cvv2'] = '123';
-       $defaults['credit_card_exp_date'] = '2027-12';
-       $defaults['credit_card_number'] = '4111111111111111';
-       $form->setDefaults($defaults);
+	if($form->elementExists( 'credit_card_type' ) ) {
+	       $elements = & $form->getElement('credit_card_type');
+	       $options = & $elements->_options;
+	       $options[1]['attr']['selected'] = '';
+	       $defaults['cvv2'] = '123';
+	       $defaults['credit_card_exp_date'] = '2027-12';
+	       $defaults['credit_card_number'] = '4111111111111111';
+	       $form->setDefaults($defaults);
+	}
   }
 }
